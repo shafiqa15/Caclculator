@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+<<<<<<img width="1440" alt="Screenshot 2024-11-05 at 12 26 39" src="https://github.com/user-attachments/assets/442778e3-8b5b-467f-a4f0-d3f6c66cb9dd">
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
