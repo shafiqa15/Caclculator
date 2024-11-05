@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "/Users/shafiqaabdat/calculator/src/Pages/Calculator/Calculater.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons";
+import Lcd from "/Users/shafiqaabdat/calculator/src/Components/LCD/Lcd";
+import CalculatorButtons from "../../Components/Buttons/CalculatorButtons";
+
 interface states {
   currentInput: string;
   prevInput: number | null;
@@ -100,6 +101,7 @@ const Calculator: React.FC = () => {
       op: "0",
     });
   };
+
   const PowerOff = () => {
     setState({
       currentInput: " ",
@@ -110,26 +112,16 @@ const Calculator: React.FC = () => {
 
   return (
     <div className="calculator">
-      <div className="display">{state.currentInput}</div>{" "}
-      <div className="buttons">
-        <button onClick={() => clear()}>AC</button>
-        <button onClick={() => clearlastinput()}>
-          <FontAwesomeIcon icon={faClose} />
-        </button>
-        <button onClick={() => calculateroot()}>√</button>
-        <button onClick={() => PowerOff()}>OFF</button>
-        <button onClick={() => handleOperation("/")}>/</button>
-        <button onClick={() => handleOperation("*")}>*</button>
-        <button onClick={() => handleOperation("-")}>-</button>
-        <button onClick={() => handleOperation("+")}>+</button>
-        {Array.from({ length: 10 }, (_, i) => (
-          <button key={i} onClick={() => handleInput(i.toString())}>
-            {i}
-          </button>
-        ))}
-        <button onClick={() => handleInput(".")}>.</button>{" "}
-        <button onClick={() => calculateResult()}>=</button>
-      </div>
+      <Lcd currentInput={state.currentInput} />
+      <CalculatorButtons
+        onClear={clear}
+        onClearLastInput={clearlastinput}
+        onCalculateRoot={calculateroot}
+        onPowerOff={PowerOff}
+        onHandleOperation={handleOperation}
+        onHandleInput={handleInput}
+        onCalculateResult={calculateResult}
+      />
     </div>
   );
 };
