@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "/Users/shafiqaabdat/calculator/src/Pages/Calculator/Calculater.css";
 import Lcd from "/Users/shafiqaabdat/calculator/src/Components/LCD/Lcd";
 import CalculatorButtons from "../../Components/Buttons/CalculatorButtons";
@@ -16,6 +16,43 @@ const Calculator: React.FC = () => {
     op: "0",
   });
 
+  const operations: { [key: string]: (a: number, b: number) => number } = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "*": (a, b) => a * b,
+    "/": (a, b) => a / b,
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const { key } = event;
+
+      if (!isNaN(Number(key))) {
+        handleInput(key);
+      } else if (["+", "-", "*", "/"].includes(key)) {
+        handleOperation(key);
+      } else if (key === "Enter") {
+        event.preventDefault();
+        calculateResult();
+      } else if (key === "Backspace") {
+        clearlastinput();
+      } else if (key === "Escape") {
+        clear();
+      } else if (key === "%") {
+        handlePercentage();
+      } else if (key === "r") {
+        calculateroot();
+      } else if (key === "p") {
+        handlePosNeg();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [state]);
+
   const clearlastinput = () => {
     if (state.currentInput === " ") {
       alert("turn on the calculator");
@@ -28,13 +65,6 @@ const Calculator: React.FC = () => {
             : "0",
       }));
     }
-  };
-
-  const operations: { [key: string]: (a: number, b: number) => number } = {
-    "+": (a, b) => a + b,
-    "-": (a, b) => a - b,
-    "*": (a, b) => a * b,
-    "/": (a, b) => a / b,
   };
 
   const handleInput = (value: string) => {
@@ -94,7 +124,23 @@ const Calculator: React.FC = () => {
     }
   };
 
+  const handlePosNeg = () => {
+    if (state.currentInput === " ") {
+      alert("turn on the calculator");
+    } else {
+      const current = -1 * parseFloat(state.currentInput);
+      setState({
+        currentInput: current.toString(),
+        prevInput: null,
+        op: "0",
+      });
+    }
+  };
+
+  let falg: boolean = false;
+
   const clear = () => {
+    falg = true;
     setState({
       currentInput: "0",
       prevInput: null,
@@ -103,11 +149,25 @@ const Calculator: React.FC = () => {
   };
 
   const PowerOff = () => {
+    falg = false;
     setState({
       currentInput: " ",
       prevInput: null,
       op: " ",
     });
+  };
+
+  const handlePercentage = () => {
+    if (state.currentInput === " ") {
+      alert("turn on the calculator");
+    } else {
+      const current = (1 / 100) * parseFloat(state.currentInput);
+      setState({
+        currentInput: current.toString(),
+        prevInput: null,
+        op: "0",
+      });
+    }
   };
 
   return (
@@ -121,6 +181,8 @@ const Calculator: React.FC = () => {
         onHandleOperation={handleOperation}
         onHandleInput={handleInput}
         onCalculateResult={calculateResult}
+        onhandlePosNeg={handlePosNeg}
+        onhandlePercentage={handlePercentage}
       />
     </div>
   );

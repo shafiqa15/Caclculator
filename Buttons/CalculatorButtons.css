@@ -1,0 +1,22 @@
+button {
+  padding: 15px;
+  font-size: 18px;
+  background-color: #9dcaed;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: bradley hand, cursive;
+  font-size: 1.2em;
+  color: #021c2e;
+}
+
+button:hover {
+  background-color: #f2dfdf;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}

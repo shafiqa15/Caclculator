@@ -8,12 +8,12 @@ body {
 
 .calculator {
   margin: 20px auto;
-  width: 40vh;
+  width: 45vh;
   padding: 20px;
-  background-color: #021c2e;
+  background-color: black;
   border-radius: 8px;
   color: #fff;
   text-align: center;
-  font-family: bradley hand, cursive;
+  font-family: Georgia, "Times New Roman", Times, serif;
   margin-top: 15vh;
 }
