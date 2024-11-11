@@ -7,6 +7,7 @@ interface states {
   currentInput: string;
   prevInput: number | null;
   op: string;
+  powerOn: boolean;
 }
 
 const Calculator: React.FC = () => {
@@ -14,6 +15,7 @@ const Calculator: React.FC = () => {
     currentInput: "0",
     prevInput: null,
     op: "0",
+    powerOn: true,
   });
 
   const operations: { [key: string]: (a: number, b: number) => number } = {
@@ -25,8 +27,9 @@ const Calculator: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      const { key } = event;
+      if (!state.powerOn) return;
 
+      const { key } = event;
       if (!isNaN(Number(key))) {
         handleInput(key);
       } else if (["+", "-", "*", "/"].includes(key)) {
@@ -53,121 +56,103 @@ const Calculator: React.FC = () => {
     };
   }, [state]);
 
-  const clearlastinput = () => {
-    if (state.currentInput === " ") {
-      alert("turn on the calculator");
-    } else {
-      setState((prevState) => ({
-        ...prevState,
-        currentInput:
-          prevState.currentInput.length > 1
-            ? prevState.currentInput.slice(0, -1)
-            : "0",
-      }));
-    }
-  };
-
   const handleInput = (value: string) => {
-    if (state.currentInput === " ") {
-      alert("Please turn on the calculator");
-    } else {
-      setState((prevState) => ({
-        ...prevState,
-        currentInput:
-          prevState.currentInput === "0"
-            ? value
-            : prevState.currentInput + value,
-      }));
-    }
+    if (!state.powerOn) return;
+    setState((prevState) => ({
+      ...prevState,
+      currentInput:
+        prevState.currentInput === "0" ? value : prevState.currentInput + value,
+    }));
   };
 
   const handleOperation = (operation: string) => {
-    if (state.currentInput === " ") {
-      alert("Please turn on the calculator");
-    } else {
-      if (state.currentInput) {
-        setState({
-          prevInput: parseFloat(state.currentInput),
-          currentInput: "0",
-          op: operation,
-        });
-      }
+    if (!state.powerOn) return;
+    if (state.currentInput) {
+      setState({
+        prevInput: parseFloat(state.currentInput),
+        currentInput: "0",
+        op: operation,
+        powerOn: state.powerOn,
+      });
     }
   };
 
+  const clearlastinput = () => {
+    if (!state.powerOn) return;
+    setState((prevState) => ({
+      ...prevState,
+      currentInput:
+        prevState.currentInput.length > 1
+          ? prevState.currentInput.slice(0, -1)
+          : "0",
+    }));
+  };
+
   const calculateResult = () => {
-    if (state.currentInput === " ") {
-      alert("turn on the calculator");
-    } else {
-      if (state.op && state.prevInput !== null) {
-        const current = parseFloat(state.currentInput);
-        const result = operations[state.op](state.prevInput, current);
-        setState({
-          currentInput: result.toString(),
-          prevInput: null,
-          op: "0",
-        });
-      }
+    if (state.op && state.prevInput !== null) {
+      const current = parseFloat(state.currentInput);
+      const result = operations[state.op](state.prevInput, current);
+      setState({
+        currentInput: result.toString(),
+        prevInput: null,
+        op: "0",
+        powerOn: state.powerOn,
+      });
     }
   };
 
   const calculateroot = () => {
-    if (state.currentInput === " ") {
-      alert("turn on the calculator");
-    } else {
-      const current = Math.pow(parseFloat(state.currentInput), 0.5);
-      setState({
-        currentInput: current.toString(),
-        prevInput: null,
-        op: "0",
-      });
-    }
+    if (!state.powerOn) return;
+
+    const current = Math.pow(parseFloat(state.currentInput), 0.5);
+    setState({
+      currentInput: current.toString(),
+      prevInput: null,
+      op: "0",
+      powerOn: state.powerOn,
+    });
   };
 
   const handlePosNeg = () => {
-    if (state.currentInput === " ") {
-      alert("turn on the calculator");
-    } else {
-      const current = -1 * parseFloat(state.currentInput);
-      setState({
-        currentInput: current.toString(),
-        prevInput: null,
-        op: "0",
-      });
-    }
+    if (!state.powerOn) return;
+
+    const current = -1 * parseFloat(state.currentInput);
+    setState({
+      currentInput: current.toString(),
+      prevInput: null,
+      op: "0",
+      powerOn: state.powerOn,
+    });
   };
 
-  let falg: boolean = false;
-
   const clear = () => {
-    falg = true;
+    if (!state.powerOn) return;
+
     setState({
       currentInput: "0",
       prevInput: null,
       op: "0",
+      powerOn: true,
     });
   };
 
   const PowerOff = () => {
-    falg = false;
     setState({
       currentInput: " ",
       prevInput: null,
       op: " ",
+      powerOn: false,
     });
   };
 
   const handlePercentage = () => {
-    if (state.currentInput === " ") {
-      alert("turn on the calculator");
-    } else {
-      const current = (1 / 100) * parseFloat(state.currentInput);
-      setState({
-        currentInput: current.toString(),
-        prevInput: null,
-        op: "0",
-      });
-    }
+    const current = (1 / 100) * parseFloat(state.currentInput);
+    setState({
+      currentInput: current.toString(),
+      prevInput: null,
+      op: "0",
+      powerOn: state.powerOn,
+    });
   };
 
   return (
