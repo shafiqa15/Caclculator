@@ -70,7 +70,7 @@ const Calculator: React.FC = () => {
     if (state.currentInput) {
       setState({
         prevInput: parseFloat(state.currentInput),
-        currentInput: "0",
+        currentInput: operation,
         op: operation,
         powerOn: state.powerOn,
       });
