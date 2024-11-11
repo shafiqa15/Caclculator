@@ -126,8 +126,6 @@ const Calculator: React.FC = () => {
   };
 
   const clear = () => {
-    if (!state.powerOn) return;
-
     setState({
       currentInput: "0",
       prevInput: null,
@@ -146,6 +144,7 @@ const Calculator: React.FC = () => {
   };
 
   const handlePercentage = () => {
+    if (!state.powerOn) return;
     const current = (1 / 100) * parseFloat(state.currentInput);
     setState({
       currentInput: current.toString(),
@@ -169,6 +168,7 @@ const Calculator: React.FC = () => {
         onhandlePosNeg={handlePosNeg}
         onhandlePercentage={handlePercentage}
       />
+      {!state.powerOn && <label>Please turn on the Calculator</label>}
     </div>
   );
 };
