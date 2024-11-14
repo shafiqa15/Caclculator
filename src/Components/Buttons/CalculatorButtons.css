@@ -1,0 +1,66 @@
+button {
+  padding: 15px;
+  font-size: 18px;
+  background-color: #535353;
+  border: none;
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-size: 1.2em;
+  color: white;
+  height: 9vh;
+}
+
+button:hover {
+  background-color: #b7b3b3;
+}
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 0.22fr);
+  gap: 10px;
+  font-weight: bold;
+}
+
+.opeartions {
+  display: flex;
+  gap: 3vh;
+  padding: 2vh;
+  flex-direction: column;
+  width: 10vh;
+}
+.opeartions > button {
+  background-color: rgb(243, 198, 63);
+  color: white;
+  font-weight: bold;
+  font-size: 2.5em;
+  /* align-items: center; */
+  text-align: center;
+  height: 10vh;
+  margin-top: -px;
+}
+
+.opeartions :hover {
+  background-color: white;
+  color: rgb(243, 198, 63);
+  font-weight: bold;
+  font-size: 2.5em;
+}
+
+.last-input {
+  padding: 15px;
+  font-size: 18px;
+  background-color: #535353;
+  color: white;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  grid-column: span 2;
+  text-align: left;
+  font-size: 2.2em;
+}
+
+.last-input:hover {
+  background-color: #b7b3b3;
+}
