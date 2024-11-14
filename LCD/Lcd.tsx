@@ -1,4 +1,3 @@
-import React from "react";
 import "../LCD/Lcd.css";
 interface LCDDisplayProps {
   currentInput: string;

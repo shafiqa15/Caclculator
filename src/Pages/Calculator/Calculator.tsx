@@ -47,6 +47,8 @@ const Calculator: React.FC = () => {
         calculateroot();
       } else if (key === "p") {
         handlePosNeg();
+      } else if (key === ".") {
+        handleInput(key);
       }
     };
 
@@ -70,7 +72,7 @@ const Calculator: React.FC = () => {
     if (state.currentInput) {
       setState({
         prevInput: parseFloat(state.currentInput),
-        currentInput: operation,
+        currentInput: "0",
         op: operation,
         powerOn: state.powerOn,
       });
